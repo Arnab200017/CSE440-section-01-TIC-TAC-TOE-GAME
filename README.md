@@ -96,15 +96,15 @@ The API returns the board, current player, game mode, selected algorithm, winner
 ├── templates/
 │   └── index.html         # Game page
 ├── static/
-│   └── css/
-│       └── style.css      # Page styling
+│   ├── css/
+│   │   └── style.css      # Page styling
+│   └── js/
+│       └── script.js      # Browser interactions and API calls
 ├── tests/
 │   ├── test_ai.py
 │   ├── test_game_logic.py
 │   └── test_routes.py
 └── requirements.txt
+
 ```
 
-## Current Branch Note
-
-The game page refers to `static/js/script.js` for browser interactions. That file is not present in this backend branch, so the page's controls need the frontend JavaScript integration before the browser game can be played end to end.
