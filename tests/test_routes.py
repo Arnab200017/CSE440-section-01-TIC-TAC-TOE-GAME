@@ -1,4 +1,3 @@
-
 import pytest
 
 from app import app
@@ -144,13 +143,38 @@ def test_invalid_position_type(client):
 
 
 def test_out_of_range_position(client):
-    """Reject a position outside the board."""
+    """Reject a position above the board."""
 
     client.post("/api/new-game", json={"mode": "human"})
 
     response = client.post(
         "/api/move",
         json={"position": 9}
+    )
+
+    assert response.status_code == 400
+
+
+def test_negative_position(client):
+    """Reject a position below the board."""
+
+    client.post("/api/new-game", json={"mode": "human"})
+
+    response = client.post(
+        "/api/move",
+        json={"position": -1}
+    )
+
+    assert response.status_code == 400
+
+def test_boolean_position(client):
+    """Reject a boolean move position."""
+
+    client.post("/api/new-game", json={"mode": "human"})
+
+    response = client.post(
+        "/api/move",
+        json={"position": True}
     )
 
     assert response.status_code == 400
