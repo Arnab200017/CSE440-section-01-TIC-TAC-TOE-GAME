@@ -1,89 +1,124 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Human vs Robot | Tic Tac Toe</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
-    <main class="game-container">
+    <!-- WELCOME SCREEN -->
+    <div id="welcome" class="welcome">
+        <div class="welcome-card" id="welcome-card">
+            <div class="big-title" aria-label="Welcome">
+                <span style="--i:0">W</span><span style="--i:1">E</span><span style="--i:2">L</span><span style="--i:3">C</span><span style="--i:4">O</span><span style="--i:5">M</span><span style="--i:6">E</span><span style="--i:7">!</span>
+            </div>
+            <div class="sub-title">to Tic Tac Toe <span class="heart">♡</span></div>
 
-        <header class="header">
-            <div class="small-title">A LITTLE GAME OF STRATEGY</div>
-            <h1>Tic Tac Toe <span>♡</span></h1>
-            <p>Can you beat the robot?</p>
-        </header>
-
-        <section class="characters">
-
-            <div class="character human">
-                <div class="character-picture">👦🏻</div>
-                <h3>Human</h3>
-                <p>Player X</p>
+            <div class="cartoon">
+                <div class="toon toon-kid">👦🏻<span class="spark s1">✨</span></div>
+                <div class="toon toon-robot">🤖<span class="wave">👋</span><span class="spark s2">⭐</span></div>
             </div>
 
-            <div class="versus">VS</div>
+            <div class="bubble">Hi there! I'm Robo. Let's see if you can beat me!</div>
 
-            <div class="character robot">
-                <div class="character-picture">🤖</div>
-                <h3>Robot</h3>
-                <p>Player O</p>
+            <button id="start-btn" class="main-btn start-btn">▶ Start Game</button>
+            <p class="hint">Turn your volume up 🔊</p>
+        </div>
+    </div>
+
+    <!-- GAME -->
+    <main class="layout">
+
+        <aside class="sidebar card">
+            <header class="header">
+                <div class="small-title">A LITTLE GAME OF STRATEGY</div>
+                <h1>Tic Tac Toe <span class="heart">♡</span></h1>
+                <p id="tagline">Can you beat the robot?</p>
+            </header>
+
+            <section class="characters">
+                <div class="character human">
+                    <div class="character-picture" id="human-pic">👦🏻</div>
+                    <h3 id="human-name">Human</h3>
+                    <p id="human-sub">Player X</p>
+                </div>
+                <div class="versus">VS</div>
+                <div class="character robot">
+                    <div class="character-picture" id="robot-pic">🤖</div>
+                    <h3 id="robot-name">Robot</h3>
+                    <p id="robot-sub">Player O</p>
+                </div>
+            </section>
+
+            <section class="settings">
+                <label for="game-mode">Choose Game Mode</label>
+                <select id="game-mode">
+                    <option value="ai">Human vs Robot</option>
+                    <option value="human">Human vs Human</option>
+                </select>
+
+                <div id="names" class="names hidden">
+                    <label for="p1-name">Player 1 name (optional)</label>
+                    <input id="p1-name" type="text" maxlength="12" placeholder="Player 1" autocomplete="off">
+
+                    <label for="p2-name">Player 2 name (optional)</label>
+                    <input id="p2-name" type="text" maxlength="12" placeholder="Player 2" autocomplete="off">
+                </div>
+
+                <div id="algorithm-box" class="algo-box">
+                    <label for="algorithm">Robot Intelligence</label>
+                    <select id="algorithm">
+                        <option value="alpha_beta">Smart Robot (Alpha-Beta)</option>
+                        <option value="minimax">Robot (Minimax)</option>
+                    </select>
+                </div>
+            </section>
+
+            <button id="sound-btn" class="side-btn" type="button">🔊 Sound: On</button>
+            <button id="new-game-btn" class="main-btn">↻ New Game</button>
+
+            <footer>Made with ♡ | CSE440 AI Project</footer>
+        </aside>
+
+        <section class="stage card">
+            <div class="game-info">
+                <h2 id="status">Human's Turn</h2>
+                <p id="message">Choose a box to make your move!</p>
             </div>
 
+            <div class="board" id="game-board" aria-label="Tic Tac Toe board">
+                <button class="cell" data-position="0" aria-label="Cell 1"></button>
+                <button class="cell" data-position="1" aria-label="Cell 2"></button>
+                <button class="cell" data-position="2" aria-label="Cell 3"></button>
+                <button class="cell" data-position="3" aria-label="Cell 4"></button>
+                <button class="cell" data-position="4" aria-label="Cell 5"></button>
+                <button class="cell" data-position="5" aria-label="Cell 6"></button>
+                <button class="cell" data-position="6" aria-label="Cell 7"></button>
+                <button class="cell" data-position="7" aria-label="Cell 8"></button>
+                <button class="cell" data-position="8" aria-label="Cell 9"></button>
+            </div>
         </section>
-
-        <section class="game-info">
-            <h2 id="status">Player X's Turn</h2>
-            <p id="message">Choose a box to make your move!</p>
-        </section>
-
-        <section class="board" id="game-board"
-                 aria-label="Tic Tac Toe board">
-
-            <button class="cell" data-position="0" aria-label="Cell 1"></button>
-            <button class="cell" data-position="1" aria-label="Cell 2"></button>
-            <button class="cell" data-position="2" aria-label="Cell 3"></button>
-
-            <button class="cell" data-position="3" aria-label="Cell 4"></button>
-            <button class="cell" data-position="4" aria-label="Cell 5"></button>
-            <button class="cell" data-position="5" aria-label="Cell 6"></button>
-
-            <button class="cell" data-position="6" aria-label="Cell 7"></button>
-            <button class="cell" data-position="7" aria-label="Cell 8"></button>
-            <button class="cell" data-position="8" aria-label="Cell 9"></button>
-
-        </section>
-
-        <section class="settings">
-            <label for="game-mode">Choose Game Mode</label>
-            <select id="game-mode">
-                <option value="ai">Human vs Robot</option>
-                <option value="human">Human vs Human</option>
-            </select>
-
-            <label for="algorithm">Robot Intelligence</label>
-            <select id="algorithm">
-                <option value="alpha_beta">Smart Robot (Alpha-Beta)</option>
-                <option value="minimax">Robot (Minimax)</option>
-            </select>
-        </section>
-
-        <button id="new-game-btn" class="new-game-btn">
-            ↻ New Game
-        </button>
-
-        <footer>
-            Made with ♡ | CSE440 AI Project
-        </footer>
 
     </main>
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- RESULT POPUP -->
+    <div id="result" class="result hidden">
+        <div id="result-card" class="result-card">
+            <div id="result-emoji" class="result-emoji">🎉</div>
+            <div class="result-people">
+                <span id="result-human">👦🏻</span>
+                <span id="result-robot">🤖</span>
+            </div>
+            <h2 id="result-title">Congratulations!</h2>
+            <p id="result-text">You won the game.</p>
+            <button id="play-again-btn" class="main-btn">↻ Play Again</button>
+        </div>
+    </div>
 
+    <div id="fx" class="fx"></div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
